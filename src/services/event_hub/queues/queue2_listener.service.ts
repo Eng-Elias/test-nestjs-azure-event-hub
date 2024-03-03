@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ServiceBusClient } from '@azure/service-bus';
 import { AzureConfigService } from '../azure_config.service';
 import { MessageService } from '../../../services/message/message.service';
+import { Queues } from '../../../utils/consts';
 
 @Injectable()
 export class Queue2ListenerService {
@@ -17,7 +18,7 @@ export class Queue2ListenerService {
   }
 
   async listenToQueue(): Promise<void> {
-    const receiver = this.serviceBusClient.createReceiver('queue2');
+    const receiver = this.serviceBusClient.createReceiver(Queues.queue1);
     receiver.subscribe({
       processMessage: async (message) => {
         console.log('Received message from queue2:', message.body);
